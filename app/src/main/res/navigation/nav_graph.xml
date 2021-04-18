@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mangaFragment">
+
+    <fragment
+        android:id="@+id/mangaFragment"
+        android:name="com.app.boruto.manga.presentation.MangaFragment"
+        android:label="fragment_manga"
+        tools:layout="@layout/fragment_manga" >
+        <action
+            android:id="@+id/action_mangaFragment_to_informationFragment"
+            app:destination="@id/informationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/informationFragment"
+        android:name="com.app.boruto.manga.presentation.InformationFragment"
+        android:label="fragment_information"
+        tools:layout="@layout/fragment_information" />
+</navigation>

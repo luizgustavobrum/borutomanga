@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Boruto Manga</string>
+
+    <!-- Boruto Card-->
+    <string name="title_card">Capitulo N</string>
+    <string name="description_image">Capa do Mangá</string>
+    <string name="title_description">Descrição do capitulo N</string>
+
+    <!-- Bottom Menu-->
+    <string name="menu_main">Principal</string>
+    <string name="menu_about">Sobre</string>
+
+    <!-- Information -->
+    <string name="version">1.0.0</string>
+    <string name="information_text">Olá! O Aplicativo Boruto Mangá foi criado para estudos.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

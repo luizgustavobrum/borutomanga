@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "221670304180",
+    "firebase_url": "https://manga-boruto-dde1a-default-rtdb.firebaseio.com",
+    "project_id": "manga-boruto-dde1a",
+    "storage_bucket": "manga-boruto-dde1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221670304180:android:42e03352c17d04876eeae1",
+        "android_client_info": {
+          "package_name": "com.app.boruto.manga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221670304180-olkti3ikui0uqpr779suvnrnfab84t20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPZTip6VLU16RAwKf8jQqKMINWY4fmNqo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221670304180-olkti3ikui0uqpr779suvnrnfab84t20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
