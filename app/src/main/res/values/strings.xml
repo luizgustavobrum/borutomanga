@@ -12,8 +12,10 @@
 
     <!-- Information -->
     <string name="version">1.0.0</string>
-    <string name="information_text">Olá! O Aplicativo Boruto Mangá foi criado para estudos.</string>
+    <string name="information_text">
+        Olá! Tudo bem? O Aplicativo Boruto Mangá foi criado para estudos.
+        A junção de desenvolvimento de apps com o universo preferido do desenvolvedor :)
+    </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_app">Boruto</string>
 </resources>
