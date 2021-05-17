@@ -31,4 +31,7 @@ class MangaActivity : AppCompatActivity() {
             activity.finish()
         }
     }
+    /*
+    *  Teste de commit
+    * */
 }
