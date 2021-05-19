@@ -12,10 +12,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.app.boruto.manga.databinding.FragmentMangaBinding
+import com.app.boruto.manga.model.Manga
 import com.app.boruto.manga.model.toSite
 import com.app.boruto.manga.repository.FirebaseRepository
 
 class MangaFragment : Fragment() {
+
+    companion object {
+        const val COLUMN_MAX = 2
+    }
 
     private var _binding: FragmentMangaBinding? = null
     private val binding get() = _binding!!
@@ -39,7 +44,7 @@ class MangaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setRecyclerView()
+        observerMangaList()
     }
 
     override fun onDestroyView() {
@@ -47,22 +52,25 @@ class MangaFragment : Fragment() {
         _binding = null
     }
 
-    private fun setRecyclerView() {
+    private fun observerMangaList() {
         viewModel.mangaLiveData.observe(viewLifecycleOwner, Observer { mangas ->
-            mangas?.let {
-                with(binding.recyclerViewManga) {
-                    layoutManager = GridLayoutManager(
-                        requireContext(),
-                        2,
-                        RecyclerView.VERTICAL,
-                        false
-                    )
-                    setHasFixedSize(true)
-                    adapter = MangaAdapter(it) {
-                        it.link.toSite(requireContext())
-                    }
-                }
-            }
+            mangas ?: return@Observer
+            showMangaList(mangas)
         })
+    }
+
+    private fun showMangaList(list: List<Manga>) {
+        binding.recyclerViewManga.run {
+            layoutManager = GridLayoutManager(
+                requireContext(),
+                COLUMN_MAX,
+                RecyclerView.VERTICAL,
+                false
+            )
+            setHasFixedSize(true)
+            adapter = MangaAdapter(list) {
+                it.link.toSite(requireContext())
+            }
+        }
     }
 }

@@ -26,9 +26,12 @@ class MangaActivity : AppCompatActivity() {
 
     companion object {
         fun toMangaActivity(activity: Activity) {
-            activity.startActivity(Intent(activity, MangaActivity::class.java))
-            Animatoo.animateFade(activity)
-            activity.finish()
+            activity.run {
+                startActivity(Intent(activity, MangaActivity::class.java))
+                Animatoo.animateFade(this)
+                finish()
+            }
+
         }
     }
 }
