@@ -1,13 +1,15 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'com.google.gms.google-services'
+plugins {
+    id("com.android.application")
+    id("kotlin-android")
+    id("com.google.gms.google-services")
+}
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.app.boruto.manga"
+        applicationId = "com.app.boruto.manga"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
