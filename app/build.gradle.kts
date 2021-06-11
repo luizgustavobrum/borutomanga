@@ -29,6 +29,12 @@ android {
         jvmTarget = "1.8"
     }
 
+    tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = freeCompilerArgs + "-Xallow-result-return-type"
+        }
+    }
+
     viewBinding {
         android.buildFeatures.viewBinding = true
     }
