@@ -1,7 +1,5 @@
 /build
-
-.idea/compiler.xml
-.idea/misc.xml
-.idea/**/workspace.xml
-**/.idea/workspace.xml
-**/.idea/tasks.xml
+.gradle
+local.properties
+*.iml
+.idea/
