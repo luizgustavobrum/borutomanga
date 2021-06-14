@@ -6,6 +6,7 @@ import android.net.Uri
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import com.app.boruto.manga.R
 import com.bumptech.glide.Glide
 import java.lang.Exception
 
@@ -47,6 +48,7 @@ class BuildImage {
             .with(context!!)
             .load(url)
             .centerCrop()
+            .placeholder(R.drawable.placeholder_boruto_capa)
             .into(image!!)
     }
 }
