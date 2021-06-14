@@ -13,7 +13,10 @@ class MangaViewModel(
     private val repository: RepositoryInterface
 ) : ViewModel() {
 
-    private val TAG = MangaViewModel::class.java.simpleName
+    companion object {
+        private val TAG = MangaViewModel::class.java.simpleName
+    }
+
     private val _mangaLiveData = MutableLiveData<List<Manga>>()
     val mangaLiveData: LiveData<List<Manga>> = _mangaLiveData
 
@@ -21,32 +24,17 @@ class MangaViewModel(
         onEventCoroutine()
     }
 
-    private fun onEventListener() {
-        repository.onMangaListerner(
-            onSuccess = { list ->
-                Log.d(TAG, list.toString())
-                _mangaLiveData.postValue(list)
-            },
-            onError = { error ->
-                Log.e(TAG, "Error: $error")
-            })
-    }
-
-    private fun onEventCoroutine() {
-        viewModelScope.launch(Dispatchers.IO) {
-            val response = repository.onMangaCoroutine()
-            if (response.isSuccess) {
-                response.fold(
-                    onSuccess = {
-                        _mangaLiveData.postValue(it)
-                    }, onFailure = {
-                        Log.e(TAG, "Erro: ${it.message.orEmpty()}")
-                    })
-            } else {
-                Log.e(TAG, "Não foi possivel fazer o request dos dados...")
+    private fun onEventCoroutine(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        viewModelScope.launch {
+            val response = withContext(dispatcher) {
+                repository.onMangaCoroutine()
             }
+            response.fold(
+                onSuccess = {
+                    _mangaLiveData.postValue(it)
+                }, onFailure = {
+                    Log.e(TAG, "Erro: ${it.message.orEmpty()}")
+                })
         }
-
     }
-
 }
