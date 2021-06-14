@@ -8,39 +8,17 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import java.lang.Exception
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class FirebaseRepository : RepositoryInterface {
 
+    companion object {
+        private val TAG = FirebaseRepository::class.java.simpleName
+    }
+
     private val myDataBase = Firebase.database.reference
     private val listManga: MutableList<Manga> = mutableListOf()
-    private val TAG = FirebaseRepository::class.java.simpleName
-
-    override fun onMangaListerner(
-        onSuccess: (MutableList<Manga>) -> Unit,
-        onError: (String) -> Unit
-    ) {
-        val valueEventListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach { dataSnapshot ->
-                    val manga = dataSnapshot.getValue<Manga>()
-                    manga?.let {
-                        listManga.add(it)
-                        Log.d(TAG, it.toString())
-                    }
-                }
-                onSuccess(listManga)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                onError(error.toString())
-            }
-
-        }
-        myDataBase.addValueEventListener(valueEventListener)
-    }
 
     override suspend fun onMangaCoroutine(): Result<List<Manga>> =
         suspendCoroutine { continuation ->
@@ -56,11 +34,11 @@ class FirebaseRepository : RepositoryInterface {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    Log.e(TAG, "$error" )
                     continuation.resumeWith(Result.failure(Exception("$error")))
                 }
 
             }
             myDataBase.addValueEventListener(valueEventListener)
-        }
-
+    }
 }
