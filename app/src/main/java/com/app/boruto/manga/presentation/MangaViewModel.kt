@@ -6,11 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.boruto.manga.model.Manga
-import com.app.boruto.manga.repository.RepositoryInterface
+import com.app.boruto.manga.repository.FirebaseRepository
 import kotlinx.coroutines.*
 
 class MangaViewModel(
-    private val repository: RepositoryInterface
+    private val repository: FirebaseRepository
 ) : ViewModel() {
 
     companion object {

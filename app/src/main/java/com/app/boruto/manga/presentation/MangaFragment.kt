@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.boruto.manga.databinding.FragmentMangaBinding
 import com.app.boruto.manga.model.Manga
 import com.app.boruto.manga.model.toSite
-import com.app.boruto.manga.repository.FirebaseRepository
+import com.app.boruto.manga.repository.FirebaseRepositoryImpl
 
 class MangaFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class MangaFragment : Fragment() {
     private val viewModel: MangaViewModel by activityViewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MangaViewModel(FirebaseRepository()) as T
+                return MangaViewModel(FirebaseRepositoryImpl()) as T
             }
         }
     }
