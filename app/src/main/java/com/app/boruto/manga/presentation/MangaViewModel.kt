@@ -1,40 +1,30 @@
 package com.app.boruto.manga.presentation
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.app.boruto.manga.model.Manga
-import com.app.boruto.manga.repository.RepositoryInterface
+import androidx.lifecycle.*
+import com.app.boruto.manga.repository.FirebaseRepository
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 
 class MangaViewModel(
-    private val repository: RepositoryInterface
+    private val repository: FirebaseRepository
 ) : ViewModel() {
 
-    companion object {
-        private val TAG = MangaViewModel::class.java.simpleName
-    }
-
-    private val _mangaLiveData = MutableLiveData<List<Manga>>()
-    val mangaLiveData: LiveData<List<Manga>> = _mangaLiveData
+    private val _uiStateManga: MutableStateFlow<UiStateManga> =
+        MutableStateFlow(UiStateManga.Initial)
+    val uiStateManga: StateFlow<UiStateManga> = _uiStateManga
 
     init {
         onEventCoroutine()
     }
 
-    private fun onEventCoroutine(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    private fun onEventCoroutine() {
+        _uiStateManga.value = UiStateManga.Loading
         viewModelScope.launch {
-            val response = withContext(dispatcher) {
-                repository.onMangaCoroutine()
+            repository.onMangaCoroutine().collect {
+                _uiStateManga.value = UiStateManga.Success(it)
             }
-            response.fold(
-                onSuccess = {
-                    _mangaLiveData.postValue(it)
-                }, onFailure = {
-                    Log.e(TAG, "Erro: ${it.message.orEmpty()}")
-                })
         }
     }
 }

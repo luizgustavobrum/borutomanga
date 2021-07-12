@@ -31,11 +31,18 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
             android:id="@+id/recyclerViewManga"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:itemCount="10"
             tools:listitem="@layout/boruto_manga" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </FrameLayout>
 
 

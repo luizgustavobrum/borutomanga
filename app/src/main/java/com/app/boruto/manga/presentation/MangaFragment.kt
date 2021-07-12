@@ -4,17 +4,23 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.app.boruto.manga.data.FirebaseDataImpl
 import com.app.boruto.manga.databinding.FragmentMangaBinding
 import com.app.boruto.manga.model.Manga
 import com.app.boruto.manga.model.toSite
-import com.app.boruto.manga.repository.FirebaseRepository
+import com.app.boruto.manga.repository.FirebaseRepositoryImpl
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class MangaFragment : Fragment() {
 
@@ -28,7 +34,7 @@ class MangaFragment : Fragment() {
     private val viewModel: MangaViewModel by activityViewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MangaViewModel(FirebaseRepository()) as T
+                return MangaViewModel(FirebaseRepositoryImpl(FirebaseDataImpl(Firebase.database))) as T
             }
         }
     }
@@ -53,10 +59,33 @@ class MangaFragment : Fragment() {
     }
 
     private fun observerMangaList() {
-        viewModel.mangaLiveData.observe(viewLifecycleOwner, Observer { mangas ->
-            mangas ?: return@Observer
-            showMangaList(mangas)
+        viewModel.uiStateManga.asLiveData().observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is UiStateManga.Loading -> {
+
+                }
+                is UiStateManga.Success -> {
+                    showMangaList(it.value)
+                    gone()
+                }
+                is UiStateManga.Error -> {
+
+                }
+                is UiStateManga.Initial -> {
+
+                }
+            }
         })
+    }
+
+    private fun visibile() {
+        binding.recyclerViewManga.visibility = GONE
+        binding.progressBar.visibility = VISIBLE
+    }
+
+    private fun gone() {
+        binding.recyclerViewManga.visibility = VISIBLE
+        binding.progressBar.visibility = GONE
     }
 
     private fun showMangaList(list: List<Manga>) {
