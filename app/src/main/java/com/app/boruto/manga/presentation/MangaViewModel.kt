@@ -10,10 +10,6 @@ class MangaViewModel(
     private val repository: FirebaseRepository
 ) : ViewModel() {
 
-    companion object {
-        private val TAG = MangaViewModel::class.java.simpleName
-    }
-
     private val _mangaLiveData = MutableLiveData<List<Manga>>()
     val mangaLiveData: LiveData<List<Manga>> = _mangaLiveData
 

@@ -1,7 +1,7 @@
 package com.app.boruto.manga.repository
 
 import com.app.boruto.manga.data.FirebaseData
-import com.app.boruto.manga.data.MangaResponse
+import com.app.boruto.manga.mapper.toList
 import com.app.boruto.manga.model.Manga
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -19,19 +19,4 @@ class FirebaseRepositoryImpl(
             it.toList()
         }.flowOn(dispatcher)
 
-
-    fun List<MangaResponse>.toList(): List<Manga> {
-        val listManga: MutableList<Manga> = mutableListOf()
-        this.forEach {
-            listManga.add(
-                Manga(
-                    title = it.title,
-                    numero = it.numero,
-                    image = it.image,
-                    link = it.link
-                )
-            )
-        }
-        return listManga
-    }
 }

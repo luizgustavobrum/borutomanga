@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.boruto.manga.databinding.BorutoMangaBinding
 import com.app.boruto.manga.model.Manga
-import com.app.boruto.manga.model.load
+import com.app.boruto.manga.model.loadImage
 
 internal class MangaAdapter(
-    val mangaList: List<Manga>,
-    val callback: (Manga) -> Unit
+    private val mangaList: List<Manga>,
+    private val callback: (Manga) -> Unit
 ) : RecyclerView.Adapter<MangaAdapter.MangaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MangaViewHolder {
@@ -38,7 +38,7 @@ internal class MangaAdapter(
 
         fun bindView(manga: Manga) {
             titleView.text = "Capítulo ${manga.numero} - ${manga.title}"
-            load {
+            loadImage {
                 context = mContext
                 url = manga.image
                 image = imageView
