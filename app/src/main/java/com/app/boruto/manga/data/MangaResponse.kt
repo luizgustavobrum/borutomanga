@@ -1,9 +1,9 @@
-package com.app.boruto.manga.model
+package com.app.boruto.manga.data
 
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-data class Manga(
+data class MangaResponse(
     var title: String = "",
     var numero: String = "",
     var image: String = "",
