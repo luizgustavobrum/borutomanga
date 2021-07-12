@@ -1,44 +1,37 @@
 package com.app.boruto.manga.repository
 
-import android.util.Log
+import com.app.boruto.manga.data.FirebaseData
+import com.app.boruto.manga.data.MangaResponse
 import com.app.boruto.manga.model.Manga
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.database.ktx.getValue
-import com.google.firebase.ktx.Firebase
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
-class FirebaseRepositoryImpl : FirebaseRepository {
+class FirebaseRepositoryImpl(
+    private val data: FirebaseData
+) : FirebaseRepository {
 
-    companion object {
-        private val TAG = FirebaseRepositoryImpl::class.java.simpleName
-    }
+    override suspend fun onMangaCoroutine(
+        dispatcher: CoroutineDispatcher
+    ): Flow<List<Manga>> = data.getMangaList()
+        .map {
+            it.toList()
+        }.flowOn(dispatcher)
 
-    private val myDataBase = Firebase.database.reference
-    private val listManga: MutableList<Manga> = mutableListOf()
 
-    override suspend fun onMangaCoroutine(): Result<List<Manga>> =
-        suspendCoroutine { continuation ->
-            val valueEventListener = object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEach { dataSnapshot ->
-                        val manga = dataSnapshot.getValue<Manga>()
-                        manga?.let {
-                            listManga.add(it)
-                        }
-                    }
-                    continuation.resume(Result.success(listManga))
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e(TAG, "$error" )
-                    continuation.resumeWith(Result.failure(Exception("$error")))
-                }
-
-            }
-            myDataBase.addValueEventListener(valueEventListener)
+    fun List<MangaResponse>.toList(): List<Manga> {
+        val listManga: MutableList<Manga> = mutableListOf()
+        this.forEach {
+            listManga.add(
+                Manga(
+                    title = it.title,
+                    numero = it.numero,
+                    image = it.image,
+                    link = it.link
+                )
+            )
+        }
+        return listManga
     }
 }

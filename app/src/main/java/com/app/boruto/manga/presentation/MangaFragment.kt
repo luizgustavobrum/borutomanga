@@ -11,10 +11,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.app.boruto.manga.data.FirebaseDataImpl
 import com.app.boruto.manga.databinding.FragmentMangaBinding
 import com.app.boruto.manga.model.Manga
 import com.app.boruto.manga.model.toSite
 import com.app.boruto.manga.repository.FirebaseRepositoryImpl
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class MangaFragment : Fragment() {
 
@@ -28,7 +31,7 @@ class MangaFragment : Fragment() {
     private val viewModel: MangaViewModel by activityViewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MangaViewModel(FirebaseRepositoryImpl()) as T
+                return MangaViewModel(FirebaseRepositoryImpl(FirebaseDataImpl(Firebase.database))) as T
             }
         }
     }

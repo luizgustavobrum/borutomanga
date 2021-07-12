@@ -1,13 +1,10 @@
 package com.app.boruto.manga.presentation
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.app.boruto.manga.model.Manga
 import com.app.boruto.manga.repository.FirebaseRepository
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 
 class MangaViewModel(
     private val repository: FirebaseRepository
@@ -24,17 +21,11 @@ class MangaViewModel(
         onEventCoroutine()
     }
 
-    private fun onEventCoroutine(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    private fun onEventCoroutine() {
         viewModelScope.launch {
-            val response = withContext(dispatcher) {
-                repository.onMangaCoroutine()
+            repository.onMangaCoroutine().collect {
+                _mangaLiveData.postValue(it)
             }
-            response.fold(
-                onSuccess = {
-                    _mangaLiveData.postValue(it)
-                }, onFailure = {
-                    Log.e(TAG, "Erro: ${it.message.orEmpty()}")
-                })
         }
     }
 }
