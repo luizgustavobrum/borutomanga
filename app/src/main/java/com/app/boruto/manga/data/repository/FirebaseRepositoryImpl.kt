@@ -1,7 +1,7 @@
 package com.app.boruto.manga.data.repository
 
 import com.app.boruto.manga.data.firebase.FirebaseData
-import com.app.boruto.manga.data.mapper.toList
+import com.app.boruto.manga.data.mapper.toMangaModel
 import com.app.boruto.manga.domain.model.Manga
 import com.app.boruto.manga.domain.repository.FirebaseRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,7 +16,9 @@ class FirebaseRepositoryImpl(
     override suspend fun getMangaList(
         dispatcher: CoroutineDispatcher
     ): Flow<List<Manga>> = data.getMangaList()
-        .map {
-            it.toList()
+        .map { listMangaResponse ->
+            listMangaResponse.map {
+                it.toMangaModel()
+            }
         }.flowOn(dispatcher)
 }
