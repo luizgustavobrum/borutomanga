@@ -8,14 +8,15 @@ import com.app.boruto.manga.databinding.BorutoMangaBinding
 import com.app.boruto.manga.domain.model.Manga
 import com.app.boruto.manga.presentation.components.loadImage
 
-internal class MangaAdapter(
-    private val mangaList: List<Manga>,
-    private val callback: (Manga) -> Unit
-) : RecyclerView.Adapter<MangaAdapter.MangaViewHolder>() {
+internal class MangaAdapter
+    : RecyclerView.Adapter<MangaAdapter.MangaViewHolder>() {
+
+    private var mangaList: List<Manga> = listOf()
+    private lateinit var listener: (Manga) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MangaViewHolder {
         val binding = BorutoMangaBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MangaViewHolder(parent.context, binding, callback)
+        return MangaViewHolder(parent.context, binding)
     }
 
     override fun getItemCount() = mangaList.count()
@@ -24,16 +25,23 @@ internal class MangaAdapter(
         holder.bindView(manga = mangaList[position])
     }
 
-    class MangaViewHolder(
+    fun setMangaList(mangaList: List<Manga>) {
+        this.mangaList = mangaList
+        notifyDataSetChanged()
+    }
+
+    fun setListener(listener: (Manga) -> Unit) {
+        this.listener = listener
+    }
+
+    inner class MangaViewHolder(
         context: Context,
-        binding: BorutoMangaBinding,
-        callback: (Manga) -> Unit
+        binding: BorutoMangaBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val cardView = binding.cardViewManga
         private val titleView = binding.title
         private val imageView = binding.imageManga
-        private val mCallback = callback
         private val mContext = context
 
         fun bindView(manga: Manga) {
@@ -43,8 +51,9 @@ internal class MangaAdapter(
                 url = manga.image
                 image = imageView
             }
+
             cardView.setOnClickListener {
-                mCallback.invoke(manga)
+                listener.invoke(manga)
             }
         }
     }

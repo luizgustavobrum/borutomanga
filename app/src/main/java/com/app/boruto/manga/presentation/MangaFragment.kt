@@ -49,6 +49,8 @@ class MangaFragment : Fragment() {
         }
     }
 
+    private val mangaAdapter = MangaAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,12 +62,37 @@ class MangaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initializeRecyclerView()
+        setListenerInMangaAdapter()
         observerMangaList()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initializeRecyclerView() {
+        binding.recyclerViewManga.apply {
+            layoutManager = GridLayoutManager(
+                requireContext(),
+                COLUMN_MAX,
+                RecyclerView.VERTICAL,
+                false
+            )
+            setHasFixedSize(true)
+            adapter = mangaAdapter
+        }
+    }
+
+    private fun setListenerInMangaAdapter() {
+        mangaAdapter.setListener {
+            it.link.toSite(this.requireContext())
+        }
+    }
+
+    private fun updateDataMangaList(list: List<Manga>) {
+        mangaAdapter.setMangaList(list)
     }
 
     private fun observerMangaList() {
@@ -75,7 +102,7 @@ class MangaFragment : Fragment() {
                     uiProgressVisibile()
                 }
                 is UiStateManga.Success -> {
-                    showMangaList(it.value)
+                    updateDataMangaList(it.value)
                     uiProgressGone()
                 }
                 is UiStateManga.Error -> {
@@ -94,20 +121,5 @@ class MangaFragment : Fragment() {
     private fun uiProgressGone() {
         binding.recyclerViewManga.visibility = VISIBLE
         binding.progressBar.visibility = GONE
-    }
-
-    private fun showMangaList(list: List<Manga>) {
-        binding.recyclerViewManga.run {
-            layoutManager = GridLayoutManager(
-                requireContext(),
-                COLUMN_MAX,
-                RecyclerView.VERTICAL,
-                false
-            )
-            setHasFixedSize(true)
-            adapter = MangaAdapter(list) {
-                it.link.toSite(requireContext())
-            }
-        }
     }
 }
