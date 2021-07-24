@@ -1,4 +1,4 @@
-package com.app.boruto.manga.data
+package com.app.boruto.manga.data.model
 
 import com.google.firebase.database.IgnoreExtraProperties
 

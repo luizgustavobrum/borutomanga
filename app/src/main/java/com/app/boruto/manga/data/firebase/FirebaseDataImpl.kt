@@ -1,5 +1,6 @@
-package com.app.boruto.manga.data
+package com.app.boruto.manga.data.firebase
 
+import com.app.boruto.manga.data.model.MangaResponse
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

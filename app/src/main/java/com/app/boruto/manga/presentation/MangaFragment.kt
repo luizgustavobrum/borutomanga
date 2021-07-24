@@ -14,11 +14,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.app.boruto.manga.data.FirebaseDataImpl
+import com.app.boruto.manga.data.firebase.FirebaseDataImpl
 import com.app.boruto.manga.databinding.FragmentMangaBinding
-import com.app.boruto.manga.model.Manga
-import com.app.boruto.manga.model.toSite
-import com.app.boruto.manga.repository.FirebaseRepositoryImpl
+import com.app.boruto.manga.domain.model.Manga
+import com.app.boruto.manga.data.repository.FirebaseRepositoryImpl
+import com.app.boruto.manga.domain.usecase.MangaUseCaseImpl
+import com.app.boruto.manga.presentation.adapter.MangaAdapter
+import com.app.boruto.manga.presentation.components.toSite
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
@@ -34,7 +36,15 @@ class MangaFragment : Fragment() {
     private val viewModel: MangaViewModel by activityViewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MangaViewModel(FirebaseRepositoryImpl(FirebaseDataImpl(Firebase.database))) as T
+                return MangaViewModel(
+                    MangaUseCaseImpl(
+                        FirebaseRepositoryImpl(
+                            FirebaseDataImpl(
+                                Firebase.database
+                            )
+                        )
+                    )
+                ) as T
             }
         }
     }
@@ -43,7 +53,7 @@ class MangaFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMangaBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,28 +72,26 @@ class MangaFragment : Fragment() {
         viewModel.uiStateManga.asLiveData().observe(viewLifecycleOwner, Observer {
             when (it) {
                 is UiStateManga.Loading -> {
-
+                    uiProgressVisibile()
                 }
                 is UiStateManga.Success -> {
                     showMangaList(it.value)
-                    gone()
+                    uiProgressGone()
                 }
                 is UiStateManga.Error -> {
 
                 }
-                is UiStateManga.Initial -> {
-
-                }
+                is UiStateManga.Initial -> Unit
             }
         })
     }
 
-    private fun visibile() {
+    private fun uiProgressVisibile() {
         binding.recyclerViewManga.visibility = GONE
         binding.progressBar.visibility = VISIBLE
     }
 
-    private fun gone() {
+    private fun uiProgressGone() {
         binding.recyclerViewManga.visibility = VISIBLE
         binding.progressBar.visibility = GONE
     }

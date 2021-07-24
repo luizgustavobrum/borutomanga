@@ -1,12 +1,12 @@
-package com.app.boruto.manga.presentation
+package com.app.boruto.manga.presentation.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.app.boruto.manga.databinding.BorutoMangaBinding
-import com.app.boruto.manga.model.Manga
-import com.app.boruto.manga.model.loadImage
+import com.app.boruto.manga.domain.model.Manga
+import com.app.boruto.manga.presentation.components.loadImage
 
 internal class MangaAdapter(
     private val mangaList: List<Manga>,
