@@ -12,15 +12,14 @@ class MangaViewModel(
 ) : ViewModel() {
 
     private val _uiStateManga: MutableStateFlow<UiStateManga> =
-        MutableStateFlow(UiStateManga.Initial)
+        MutableStateFlow(UiStateManga.Loading)
     val uiStateManga: StateFlow<UiStateManga> = _uiStateManga
 
     init {
-        onEventCoroutine()
+        getListMangaEvent()
     }
 
-    private fun onEventCoroutine() {
-        _uiStateManga.value = UiStateManga.Loading
+    private fun getListMangaEvent() {
         viewModelScope.launch {
             mangaUseCase.getMangaList().collect {
                 _uiStateManga.value = UiStateManga.Success(it)
