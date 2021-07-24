@@ -1,6 +1,6 @@
 package com.app.boruto.manga.presentation
 
-import com.app.boruto.manga.model.Manga
+import com.app.boruto.manga.domain.model.Manga
 
 sealed class UiStateManga {
     object Initial : UiStateManga()

@@ -1,4 +1,4 @@
-package com.app.boruto.manga.model
+package com.app.boruto.manga.domain.model
 
 data class Manga(
     var title: String = "",

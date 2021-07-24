@@ -1,4 +1,4 @@
-package com.app.boruto.manga.model
+package com.app.boruto.manga.presentation
 
 import android.content.Context
 import android.graphics.Color

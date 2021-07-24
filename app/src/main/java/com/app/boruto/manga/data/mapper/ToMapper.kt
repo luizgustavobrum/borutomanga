@@ -1,7 +1,7 @@
-package com.app.boruto.manga.mapper
+package com.app.boruto.manga.data.mapper
 
-import com.app.boruto.manga.data.MangaResponse
-import com.app.boruto.manga.model.Manga
+import com.app.boruto.manga.data.model.MangaResponse
+import com.app.boruto.manga.domain.model.Manga
 
 fun List<MangaResponse>.toList(): List<Manga> {
     val listManga: MutableList<Manga> = mutableListOf()
