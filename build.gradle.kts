@@ -9,6 +9,8 @@ buildscript {
         classpath("com.android.tools.build:gradle:4.0.2")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("com.google.gms:google-services:4.3.4") // Google Services plugin
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.35")
+
     }
 }
 

@@ -8,8 +8,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-class FirebaseRepositoryImpl(
+class FirebaseRepositoryImpl @Inject constructor(
     private val data: FirebaseData
 ) : FirebaseRepository {
 
