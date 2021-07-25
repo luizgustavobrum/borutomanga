@@ -46,19 +46,21 @@ android {
 
 }
 
-val kotlin_version = "1.3.72"
-val materialdesign_version = "1.4.0-beta01"
-val activity_version = "1.2.3"
-val fragment_version = "1.3.2"
-val nav_version = "2.4.0-alpha01"
-val lifecycle_version = "2.3.1"
-val multidex_version = "2.0.1"
-val glide_version = "4.12.0"
+
 
 dependencies {
+    //Versions
+    val kotlinVersion = "1.5.21"
+    val materialdesignVersion = "1.4.0"
+    val activityVersion = "1.2.3"
+    val fragmentVersion = "1.3.2"
+    val navVersion = "2.4.0-alpha04"
+    val lifecycleVersion = "2.3.1"
+    val glideVersion = "4.12.0"
+
     //Kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation("androidx.core:core-ktx:1.5.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    implementation("androidx.core:core-ktx:1.6.0")
 
     //Components Android
     implementation("androidx.constraintlayout:constraintlayout:2.0.4")
@@ -66,14 +68,14 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
 
     //Test
-    testImplementation ("junit:junit:4.12")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.2.0")
+    testImplementation ("junit:junit:4.13.2")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
 
     //Androidx e MaterialDesign
-    implementation ("androidx.appcompat:appcompat:1.2.0")
+    implementation ("androidx.appcompat:appcompat:1.3.1")
     implementation ("androidx.browser:browser:1.3.0")
-    implementation ("com.google.android.material:material:$materialdesign_version")
+    implementation ("com.google.android.material:material:$materialdesignVersion")
 
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:26.0.0"))
@@ -81,22 +83,22 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx")
 
     //ViewModel
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
 
     //Activity-Kotlin
-    implementation("androidx.activity:activity-ktx:$activity_version")
+    implementation("androidx.activity:activity-ktx:$activityVersion")
 
     //Fragment-Kotlin
-    implementation("androidx.fragment:fragment-ktx:$fragment_version")
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
-    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
     //Glide
-    implementation("com.github.bumptech.glide:glide:$glide_version")
-    annotationProcessor("com.github.bumptech.glide:compiler:$glide_version")
+    implementation("com.github.bumptech.glide:glide:$glideVersion")
+    annotationProcessor("com.github.bumptech.glide:compiler:$glideVersion")
 
     //Animatoo
     implementation("com.github.mohammadatif:Animatoo:master")
