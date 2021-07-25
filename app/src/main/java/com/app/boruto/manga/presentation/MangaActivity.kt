@@ -8,7 +8,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.app.boruto.manga.databinding.ActivityMangaBinding
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MangaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMangaBinding

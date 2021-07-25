@@ -10,8 +10,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import javax.inject.Inject
 
-class FirebaseDataImpl(
+class FirebaseDataImpl @Inject constructor(
     private val myData: FirebaseDatabase
 ) : FirebaseData {
 

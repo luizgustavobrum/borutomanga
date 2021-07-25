@@ -9,21 +9,16 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.app.boruto.manga.data.firebase.FirebaseDataImpl
 import com.app.boruto.manga.databinding.FragmentMangaBinding
 import com.app.boruto.manga.domain.model.Manga
-import com.app.boruto.manga.data.repository.FirebaseRepositoryImpl
-import com.app.boruto.manga.domain.usecase.MangaUseCaseImpl
 import com.app.boruto.manga.presentation.adapter.MangaAdapter
 import com.app.boruto.manga.presentation.components.toSite
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MangaFragment : Fragment() {
 
     companion object {
@@ -32,23 +27,7 @@ class MangaFragment : Fragment() {
 
     private var _binding: FragmentMangaBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: MangaViewModel by activityViewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return MangaViewModel(
-                    MangaUseCaseImpl(
-                        FirebaseRepositoryImpl(
-                            FirebaseDataImpl(
-                                Firebase.database
-                            )
-                        )
-                    )
-                ) as T
-            }
-        }
-    }
-
+    private val viewModel: MangaViewModel by activityViewModels()
     private val mangaAdapter = MangaAdapter()
 
     override fun onCreateView(

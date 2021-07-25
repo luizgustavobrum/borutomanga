@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
     kotlin("android")
+    kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -57,6 +59,7 @@ dependencies {
     val navVersion = "2.4.0-alpha04"
     val lifecycleVersion = "2.3.1"
     val glideVersion = "4.12.0"
+    val hiltVersion = "2.35"
 
     //Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
@@ -102,5 +105,8 @@ dependencies {
 
     //Animatoo
     implementation("com.github.mohammadatif:Animatoo:master")
+
+    implementation("com.google.dagger:hilt-android:$hiltVersion")
+    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
 }
